@@ -1,10 +1,13 @@
+import math
+import classSnake
 import pygame
 
-def initWindows():
-    size = (320,320)
-    pygame.display.set_mode(size)
-    
-# tiled field, 16x16
+block_dim = ()
+snake = ''
 
-
-
+def init(screensize):
+    #field is always 10x10
+    block_dim = (math.floor(screensize[0]/10),math.floor(screensize[1]/10))
+    display.init(screensize)
+    pygame.display.set_mode(screensize)
+    snake = classSnake.Snake()
