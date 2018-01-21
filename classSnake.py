@@ -1,4 +1,4 @@
-import draw
+import draw, snake
 
 
 ########################################
@@ -61,7 +61,7 @@ class Snake():
         if (grow == False):
             del self.blocks[-1]
         new_head_pos = addPairs(self.blocks[0].position, decodeDirection(self.direction))
-        print new_head_pos
+        new_head_pos = fixWalls(new_head_pos)
         self.blocks.insert(0, Block(pos=new_head_pos))
         self.head = self.blocks[0]
 
@@ -77,3 +77,21 @@ def decodeDirection(direction):
                 "up":(0,-1),
                 "down":(0,1)}
     return directions[direction]
+
+def fixWalls(tup):
+    x = y = 0
+    if (tup[0] < 0):
+        x = snake.gamesize[0] - 1
+    elif (tup[0] > snake.gamesize[0] - 1):
+        x = 0
+    else:
+        x = tup[0]
+
+    if (tup[1] < 0):
+        y = snake.gamesize[1] - 1
+    elif (tup[1] > snake.gamesize[1] - 1):
+        y = 0
+    else:
+        y = tup[1]
+
+    return (x,y)
