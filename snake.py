@@ -5,8 +5,8 @@ import classSnake
 import draw
 import math
 
-block_dim = (math.floor(screensize[0]/10),math.floor(screensize[1]/10))
 screensize = (400,400)
+block_dim = (math.floor(screensize[0]/10),math.floor(screensize[1]/10))
 
 # main function
 if (__name__ == "__main__"):
@@ -15,6 +15,7 @@ if (__name__ == "__main__"):
         screen = pygame.display.set_mode(screensize)
         snake = classSnake.Snake()
         clock = pygame.time.Clock()
+        snakeworld = world.generateWorld((20,20))
        # main loop
         while(True):
        # check for events
@@ -22,9 +23,9 @@ if (__name__ == "__main__"):
             clock.tick(1)
        #     move snake
             snake.move()
-            # draw snake
+            # place snake into world
             for block in snake.blocks:
-                draw.drawBlock(block, screen)  
+                snakeworld = world.placeInWorld(snakeworld, block)
         #     update screen
             screen.fill(0,0,0)
             screen.flip()
