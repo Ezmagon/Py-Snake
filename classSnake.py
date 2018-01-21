@@ -57,15 +57,17 @@ class Snake():
                 pos = (prev_pos[0] - 1 , prev_pos[1])
                 block.position = pos
 
-    def move(self, world, grow=False):
+    def move(self, world, grow=0):
         ## TODO GROWTH NOT TESTED YET
         new_head_pos = addPairs(self.blocks[0].position, decodeDirection(self.direction))
         new_head_pos = fixWalls(new_head_pos)
         if world.layers["fruit"][new_head_pos[0]][new_head_pos[1]] != 0:
-            grow = True
+            grow = 1
+        if world.layers["snake"][new_head_pos[0]][new_head_pos[1]] != 0:
+            grow = 2
         self.blocks.insert(0, Block(layer="snake",pos=new_head_pos))
         self.head = self.blocks[0]
-        if (grow == False):
+        if (grow == 0):
             del self.blocks[-1]
         return grow
 
