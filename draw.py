@@ -29,11 +29,12 @@ def blitBlock(block, screen):
 
 def drawWorld(world, screen):
     rows, cols = snake.gamesize
-    for r in range(rows):
-        for c in range(cols):
-            if (world.world[r][c] != 0):
-                space = world.world[r][c]
-                blitBlock(space, screen)
+    for key, layer in world.layers.iteritems():
+        for r in range(rows):
+            for c in range(cols):
+                if (layer[r][c] != 0):
+                    space = layer[r][c]
+                    blitBlock(space, screen)
 
 def worldToReal(pos):
     x = snake.screensize[0] / snake.gamesize[0]

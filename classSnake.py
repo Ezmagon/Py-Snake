@@ -5,9 +5,10 @@ import draw, snake
 ### Class definition for block class ###
 ########################################
 class Block():
-    def __init__(self, pos=(0,0)):
+    def __init__(self, layer, pos=(0,0), color="red"):
         self.position = pos # tuple
-        self.color = "red"
+        self.color = color
+        self.layer = layer
 
 ########################################
 ### Class definition for snake class ###
@@ -41,7 +42,7 @@ class Snake():
         blocks = []
         if (n > 1):
             for i in range(n):
-                new_block = Block()
+                new_block = Block(layer="snake")
                 blocks.append(new_block)
         return blocks
 
@@ -56,14 +57,17 @@ class Snake():
                 pos = (prev_pos[0] - 1 , prev_pos[1])
                 block.position = pos
 
-    def move(self, grow=False):
+    def move(self, world, grow=False):
         ## TODO GROWTH NOT TESTED YET
-        if (grow == False):
-            del self.blocks[-1]
         new_head_pos = addPairs(self.blocks[0].position, decodeDirection(self.direction))
         new_head_pos = fixWalls(new_head_pos)
-        self.blocks.insert(0, Block(pos=new_head_pos))
+        if world.layers["fruit"][new_head_pos[0]][new_head_pos[1]] != 0:
+            grow = True
+        self.blocks.insert(0, Block(layer="snake",pos=new_head_pos))
         self.head = self.blocks[0]
+        if (grow == False):
+            del self.blocks[-1]
+        return grow
 
 ### Some global functions
 
@@ -95,3 +99,5 @@ def fixWalls(tup):
         y = tup[1]
 
     return (x,y)
+
+
