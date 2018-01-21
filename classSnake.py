@@ -21,35 +21,49 @@ Methods:
 class Snake():
     def __init__(self, direction="right"):
         self.direction = direction
-        self.blocks = initBlocks()
-        self.initPositions()
+        self.blocks = self.__initBlocks(3)
+        self.__initPositions()
         self.head = self.blocks[0]
 
+    def setDirection(self, direction):
+        opposites = (
+                ("left","right"),
+                ("right","left"),
+                ("up","down"),
+                ("down","up")
+                )
+        if ((self.direction,direction) not in opposites):
+            self.direction = direction
+        else:
+            print "opposite direction"
 
-
-    def initBlocks(n=3):
+    def __initBlocks(self, n=3):
         blocks = []
         if (n > 1):
             for i in range(n):
-                blocks.append(block())
+                new_block = Block()
+                blocks.append(new_block)
         return blocks
 
-    def initPositions(self):
+    def __initPositions(self):
         for block in self.blocks:
             if (self.blocks.index(block) == 0):
-                block.setPosition((0,0))
+                block.position = (3,0)
             else:
                 #pos = ((self.blocks(self.blocks.index(block) - 1)).position[0] + 16, 0)
                 index = self.blocks.index(block)
                 prev_pos = self.blocks[index - 1].position
-                pos = (prev_pos[0] + 16 , prev_pos[1])
+                pos = (prev_pos[0] - 1 , prev_pos[1])
+                block.position = pos
 
     def move(self, grow=False):
+        ## TODO GROWTH NOT TESTED YET
         if (grow == False):
             del self.blocks[-1]
-        new_head_pos = addPairs(self.head.position, decodeDirection(self.direction))
-        self.blocks.insert(block(), 0)
-        self.head.position = new_head_pos
+        new_head_pos = addPairs(self.blocks[0].position, decodeDirection(self.direction))
+        print new_head_pos
+        self.blocks.insert(0, Block(pos=new_head_pos))
+        self.head = self.blocks[0]
 
 ### Some global functions
 
@@ -58,8 +72,8 @@ def addPairs(tup1, tup2):
 
 def decodeDirection(direction):
     directions = {
-                left:(-16,0),
-                right:(16,0),
-                up:(0,16),
-                down:(0,-16)}
+                "left":(-1,0),
+                "right":(1,0),
+                "up":(0,-1),
+                "down":(0,1)}
     return directions[direction]
