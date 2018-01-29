@@ -4,7 +4,7 @@ import pygame, math
 import classSnake, draw, world, fruit
 
 # define some globals
-screensize = (400,400)
+screensize = (700,700)
 gamesize = (20, 20)
 
 # calculate the block dimensions in pixels
