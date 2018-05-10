@@ -1,7 +1,7 @@
-#!/usr/bin/python2
+#!/usr/bin/env/ python2
 
 import pygame, math
-import classSnake, draw, world, fruit
+from pysnake import *
 
 # define some globals
 screensize = (700,700)
