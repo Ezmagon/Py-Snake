@@ -4,6 +4,6 @@ setup(
         name = "pysnake",
         author = "Matthijs Tadema",
         packages = find_packages(),
-        scripts = ["pysnake/snake.py"],
+        scripts = ["pysnake/pysnake.py"],
         install_requires = ["pygame"]
         )
